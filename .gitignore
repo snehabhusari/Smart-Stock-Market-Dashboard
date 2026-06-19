@@ -1,0 +1,66 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.env/
+.venv/
+env/
+venv/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VS Code settings
+.vscode/
+
+# PyCharm settings
+.idea/
+
+# MacOS metadata
+.DS_Store
+
+# Logs
+*.log
+
+# Test output
+htmlcov/
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+.cache
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Python wheels
+*.whl
+
+# Package management
+Pipfile.lock
+poetry.lock
+
+# Linting tools
+.mypy_cache/
+.pytest_cache/
+.pyre/
+.pytype/
+
+# Environment variable files
+.env
+.env.*
+
+# Local secrets or configs
+secrets.yaml
+config.yaml
+
+# Data or output
+data/
+output/
+checkpoints/
