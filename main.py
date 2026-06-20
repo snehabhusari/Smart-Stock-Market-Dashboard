@@ -5,43 +5,46 @@ import os
 def launch_ui():
     with gr.Blocks(theme=gr.themes.Soft(primary_hue="indigo", secondary_hue="fuchsia"), title="📈 SNEHA's Live Stock Dashboard") as demo:
         
-        # --- Advanced CSS for Animations ---
-        gr.HTML("""
-        <style>
-        .gradio-container { background:#334155 !important; color: #ffffff !important; }
-        
-        /* Animated Marquee Heading */
-        .marquee {
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px 0;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        .marquee h1 {
-        display: inline-block;
-        padding-left: 100%;
-        animation: marquee 15s linear infinite;
-        font-size: 30px;
-        color: #60a5fa;  /* light sky blue */
-        margin: 0;
-       }
+      gr.HTML("""
+<style>
+.gradio-container { 
+    background: #f1f5f9 !important;  /* super light gray background */
+    color: #000000 !important;       /* pure black text */
+}
 
-        @keyframes marquee {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-100%, 0); }
-        }
+/* Animated Marquee Heading */
+.marquee {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    background: rgba(0, 0, 0, 0.05); /* हल्का transparent black strip */
+    padding: 10px 0;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.marquee h1 {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 15s linear infinite;
+    font-size: 30px;
+    color: #000000;   /* heading भी black */
+    margin: 0;
+}
 
-        /* Button hover animation */
-        button:hover {
-            transform: scale(1.05);
-            transition: 0.3s ease-in-out;
-            box-shadow: 0 0 15px #7873f5;
-        }
-        </style>
-        """)
+@keyframes marquee {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); }
+}
+
+/* Button hover animation */
+button:hover {
+    transform: scale(1.05);
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 0 15px #7873f5;
+}
+</style>
+""")
+
 
         # --- Animated Header Section ---
         gr.HTML("""
