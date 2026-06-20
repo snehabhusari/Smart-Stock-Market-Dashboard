@@ -1,6 +1,6 @@
 import gradio as gr
 from generate_analysis import run_analysis
-import os
+import os 
 
 def launch_ui():
     # Use Soft theme with indigo primary color
