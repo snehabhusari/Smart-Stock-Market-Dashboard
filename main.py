@@ -96,7 +96,7 @@ def launch_ui():
         color: #e2e8f0;
         backdrop-filter: blur(10px);
     ">
-        <h3 style="color: #fbbf24; margin-bottom: 15px;">Welcome to your Financial Intelligence Hub! ✨ Made by <strong>SNEHA BHUSARI</strong></h3>
+        <h3 style="color: #fbbf24; margin-bottom: 15px;">Welcome to your Financial Intelligence Hub! ✨ Made by SNEHA BHUSARI</h3>
         <p style="font-size: 16px; line-height: 1.6;">
             This dashboard is professionally designed for real-time stock insights.
         </p>
