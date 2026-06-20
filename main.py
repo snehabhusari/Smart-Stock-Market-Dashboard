@@ -17,7 +17,7 @@ gr.HTML("""
     width: 100%;
     overflow: hidden;
     white-space: nowrap;
-    background: rgba(0, 0, 0, 0.05); /* हल्का transparent black strip */
+    background: rgba(0, 0, 0, 0.05); /*  transparent black strip */
     padding: 10px 0;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -27,7 +27,7 @@ gr.HTML("""
     padding-left: 100%;
     animation: marquee 15s linear infinite;
     font-size: 30px;
-    color: #000000;   /* heading भी black */
+    color: #000000;   /* heading  black */
     margin: 0;
 }
 
