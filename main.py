@@ -3,7 +3,7 @@ from generate_analysis import run_analysis
 import os
 
 def launch_ui():
-    # Gradio की Soft Theme का उपयोग करें जो बहुत क्लीन लगती है
+    
     with gr.Blocks(theme=gr.themes.Soft(primary_hue="indigo", secondary_hue="fuchsia"), title="📈 Sneha's Stock Dashboard") as demo:
         
         # --- Custom CSS for High-End Animation ---
