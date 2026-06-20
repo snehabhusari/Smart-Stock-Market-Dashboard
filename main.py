@@ -2,7 +2,7 @@ import gradio as gr
 from generate_analysis import run_analysis
 
 def launch_ui():
-    with gr.Blocks(title="📈 Stock Portfolio Dashboard") as demo:
+    with gr.Blocks(title="📈 Stock Portfolio Dashboard") as demo: 
         # --- Custom CSS for Attractive UI ---
         gr.HTML("""
         <style>
