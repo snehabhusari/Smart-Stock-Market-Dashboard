@@ -3,53 +3,64 @@ from generate_analysis import run_analysis
 import os
 
 def launch_ui():
-    with gr.Blocks(theme=gr.themes.Soft(primary_hue="indigo", secondary_hue="fuchsia"), title="📈 SNEHA's Live Stock Dashboard") as demo:
+    # Use Soft theme with indigo primary color
+    with gr.Blocks(theme=gr.themes.Soft(primary_hue="indigo"), title="📈 Sneha's Stock Dashboard") as demo:
         
-gr.HTML(""" 
-<style>
-.gradio-container { 
-    background: #f1f5f9 !important;  /* super light gray background */
-    color: #000000 !important;       /* pure black text */
-}
-
-/* Animated Marquee Heading */
-.marquee {
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    background: rgba(0, 0, 0, 0.05); /*  transparent black strip */
-    padding: 10px 0;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-.marquee h1 {
-    display: inline-block;
-    padding-left: 100%;
-    animation: marquee 15s linear infinite;
-    font-size: 30px;
-    color: #000000;   /* heading  black */
-    margin: 0;
-}
-
-@keyframes marquee {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(-100%, 0); }
-}
-
-/* Button hover animation */
-button:hover {
-    transform: scale(1.05);
-    transition: 0.3s ease-in-out;
-    box-shadow: 0 0 15px #7873f5;
-}
-</style>
-""")
-
-
-        # --- Animated Header Section ---
+        # Inject custom CSS for animations and styling
         gr.HTML("""
-        <div class="marquee">
-            <h1>📊 SNEHA: Smart Stock Portfolio Dashboard | Real-Time Market Analysis 📈</h1>
+        <style>
+        /* Modern Glassmorphism Container */
+        .gradio-container { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important; 
+            color: #ffffff !important;
+        }
+
+        /* Animated Heading with Glow Effect */
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 0;
+            border-radius: 50px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        .marquee-text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: move-text 20s linear infinite;
+            font-size: 28px;
+            font-weight: bold;
+            color: #fbbf24; /* Golden color for high visibility */
+            text-shadow: 0 0 10px #fbbf24;
+        }
+        @keyframes move-text {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Card and Button Styling */
+        .gr-box { background: rgba(255, 255, 255, 0.05) !important; border-radius: 15px !important; }
+        button { 
+            background: linear-gradient(45deg, #4f46e5, #ec4899) !important;
+            color: white !important;
+            border: none !important;
+            transition: all 0.4s ease !important;
+        }
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #ec4899;
+        }
+        </style>
+        """)
+
+        # Animated Header Display
+        gr.HTML("""
+        <div class="marquee-container">
+            <div class="marquee-text">
+                📊 SNEHA: SMART STOCK PORTFOLIO DASHBOARD | REAL-TIME ANALYSIS | LIVE MARKET UPDATES 📈
+            </div>
         </div>
         """)
 
@@ -60,6 +71,7 @@ button:hover {
                         ticker = gr.Textbox(label="Stock Symbol", value="RVNL", placeholder="e.g. RELIANCE.NS")
                         date_mode = gr.Radio(["Relative Period", "Custom Date Range"], value="Relative Period", label="Select Mode")
                         
+                        # Input groups for date selection
                         with gr.Group() as period_group:
                             months = gr.Slider(1, 24, value=6, label="Period (Months)")
                         
@@ -68,7 +80,7 @@ button:hover {
                             end_date = gr.Textbox(label="End Date (YYYY-MM-DD)", value="2023-12-31")
                         
                         plot_type = gr.Dropdown(["Price Only", "Price + MA", "RSI Only", "Price + MA + RSI"], value="Price + MA + RSI", label="Analysis Type")
-                        run_btn = gr.Button("🚀 Generate Analysis", variant="primary")
+                        run_btn = gr.Button("🚀 Generate Analysis")
                     
                     with gr.Column(scale=2):
                         output_plot = gr.Plot(label="Live Market Chart")
@@ -76,18 +88,24 @@ button:hover {
 
             with gr.TabItem("ℹ️ About"):
                 gr.Markdown("""
-                ### Welcome! 👋
-                This dashboard provides real-time stock insights using Python, Gradio, and YFinance.
-                - **Developer:** Sneha
-                - **Core Features:** Technical Indicators, Price History, and Relative Analysis.
+                <div style="padding: 20px; color: #cbd5e1;">
+                <h3>Welcome to your Financial Intelligence Hub! ✨</h3>
+                <p>This dashboard is professionally designed for real-time stock insights.</p>
+                <ul>
+                    <li><b>Developer:</b> Sneha</li>
+                    <li><b>Tech Stack:</b> Python, Gradio, YFinance</li>
+                    <li><b>Key Features:</b> RSI, Moving Averages, Interactive Charts.</li>
+                </ul>
+                </div>
                 """)
 
-        # Visibility logic
+        # Visibility Logic to toggle between relative and custom dates
         def toggle(mode):
             return gr.update(visible=(mode == "Relative Period")), gr.update(visible=(mode == "Custom Date Range"))
         
         date_mode.change(toggle, inputs=[date_mode], outputs=[period_group, date_group])
         
+        # Link button click to analysis function
         run_btn.click(
             fn=run_analysis,
             inputs=[ticker, date_mode, months, start_date, end_date, plot_type],
@@ -97,5 +115,6 @@ button:hover {
     return demo
 
 if __name__ == "__main__":
+    # Use PORT environment variable provided by Render, default to 10000
     port = int(os.environ.get("PORT", 10000))
     launch_ui().launch(server_name="0.0.0.0", server_port=port)
