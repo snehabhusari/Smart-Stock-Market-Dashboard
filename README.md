@@ -2,7 +2,7 @@
 
 **SNEHA Dashboard** is an interactive and lightweight stock market dashboard that enables users to visualize stock price movements, explore trends, and filter historical stock data for any publicly traded company. Built using Python's data stack and deployed on Hugging Face Spaces, it delivers a simple, fast, and intuitive interface for both technical and non-technical users.
 
-
+#🔗 Link: https://smart-stock-market-dashboard.onrender.com/
 ---
  
 ## 🚀 Features
