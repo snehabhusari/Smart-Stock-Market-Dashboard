@@ -3,77 +3,73 @@ from generate_analysis import run_analysis
 import os
 
 def launch_ui():
-    with gr.Blocks(title="📈 Stock Portfolio Dashboard") as demo:
-        # --- Custom CSS for Attractive UI ---
+    # Gradio की Soft Theme का उपयोग करें जो बहुत क्लीन लगती है
+    with gr.Blocks(theme=gr.themes.Soft(primary_hue="indigo", secondary_hue="fuchsia"), title="📈 Sneha's Stock Dashboard") as demo:
+        
+        # --- Custom CSS for High-End Animation ---
         gr.HTML("""
         <style>
-        body {
-            background: linear-gradient(135deg, #1f1c2c, #928dab);
-            color: white;
+        .gradio-container { background: #0f172a !important; }
+        h1 { 
+            text-align: center; 
+            color: #ffffff; 
+            font-size: 40px; 
+            margin-bottom: 20px;
+            background: -webkit-linear-gradient(#ff6ec4, #7873f5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s infinite;
         }
-        h1 {
-            font-size: 32px;
-            animation: glow 1s ease-in-out infinite alternate;
-        }
-        @keyframes glow {
-            from { text-shadow: 0 0 10px #ff6ec4; }
-            to { text-shadow: 0 0 20px #7873f5; }
-        }
+        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
+        .tab-button { font-weight: bold !important; }
         </style>
         """)
 
-        # --- Animated Heading ---
-        gr.HTML("<h1>📊 SNEHA : Stock Portfolio Dashboard</h1>")
+        gr.HTML("<h1>📊 SNEHA: Smart Stock Portfolio Dashboard</h1>")
 
-        # --- Tabs for Sections ---
-        with gr.Tab("💹 Analysis"):
-            with gr.Row():
-                ticker = gr.Textbox(label="💹 Stock Symbol", placeholder="e.g., RVNL.NS", value="RVNL")
+        with gr.Tabs():
+            with gr.TabItem("💹 Market Analysis", elem_classes="tab-button"):
+                with gr.Row():
+                    with gr.Column(scale=1):
+                        ticker = gr.Textbox(label="Stock Symbol", value="RVNL", placeholder="e.g. RELIANCE.NS")
+                        date_mode = gr.Radio(["Relative Period", "Custom Date Range"], value="Relative Period", label="Select Mode")
+                        
+                        with gr.Group() as period_group:
+                            months = gr.Slider(1, 24, value=6, label="Period (Months)")
+                        
+                        with gr.Group(visible=False) as date_group:
+                            start_date = gr.Textbox(label="Start Date (YYYY-MM-DD)", value="2023-01-01")
+                            end_date = gr.Textbox(label="End Date (YYYY-MM-DD)", value="2023-12-31")
+                        
+                        plot_type = gr.Dropdown(["Price Only", "Price + MA", "RSI Only", "Price + MA + RSI"], value="Price + MA + RSI", label="Analysis Type")
+                        run_btn = gr.Button("🚀 Generate Analysis", variant="primary")
+                    
+                    with gr.Column(scale=2):
+                        output_plot = gr.Plot(label="Live Market Chart")
+                        output_df = gr.Dataframe(label="Stock Data Preview")
 
-                date_mode = gr.Radio(
-                    choices=["Relative Period", "Custom Date Range"],
-                    value="Relative Period",
-                    label="📅 Select Date Mode"
-                )
+            with gr.TabItem("ℹ️ About", elem_classes="tab-button"):
+                gr.Markdown("""
+                ### Welcome to your Personal Finance Hub! ✨
+                - **Built by:** Sneha
+                - **Features:** Real-time stock data analysis, RSI calculation, and Moving Averages.
+                - **Technology:** Python, Gradio, YFinance.
+                """)
 
-            with gr.Row(visible=True) as relative_period_inputs:
-                months = gr.Slider(1, 24, value=6, label="⏳ Period (in months)")
-
-            with gr.Row(visible=False) as custom_date_inputs:
-                start_date = gr.Textbox(label="📆 Start Date (YYYY-MM-DD)", placeholder="2023-01-01")
-                end_date = gr.Textbox(label="📆 End Date (YYYY-MM-DD)", placeholder="2023-12-31")
-
-            plot_type = gr.Dropdown(
-                label="📈 Plot Type",
-                choices=["Price Only", "Price + MA", "RSI Only", "Price + MA + RSI"],
-                value="Price + MA + RSI"
-            )
-
-            run_btn = gr.Button("🚀 Analyze")
-
-            output_plot = gr.Plot()
-            output_df = gr.Dataframe()
-
-            def toggle_inputs(mode):
-                return (
-                    gr.update(visible=(mode == "Relative Period")),
-                    gr.update(visible=(mode == "Custom Date Range"))
-                )
-
-            date_mode.change(fn=toggle_inputs, inputs=[date_mode], outputs=[relative_period_inputs, custom_date_inputs])
-
-            run_btn.click(
-                fn=run_analysis,
-                inputs=[ticker, date_mode, months, start_date, end_date, plot_type],
-                outputs=[output_plot, output_df]
-            )
-
-        with gr.Tab("ℹ️ About"):
-            gr.Markdown("This dashboard is built by **Sneha ✨** using Gradio.")
+        # Logic for hiding/showing fields
+        def toggle(mode):
+            return gr.update(visible=(mode == "Relative Period")), gr.update(visible=(mode == "Custom Date Range"))
+        
+        date_mode.change(toggle, inputs=[date_mode], outputs=[period_group, date_group])
+        
+        run_btn.click(
+            fn=run_analysis,
+            inputs=[ticker, date_mode, months, start_date, end_date, plot_type],
+            outputs=[output_plot, output_df]
+        )
 
     return demo
 
 if __name__ == "__main__":
-    demo = launch_ui()
-    
-    demo.launch(server_name="0.0.0.0", server_port=int(os.environ.get("PORT", 7860)))
+    port = int(os.environ.get("PORT", 10000))
+    launch_ui().launch(server_name="0.0.0.0", server_port=port)
