@@ -1,8 +1,7 @@
-# 📈 ARTHA Dashboard v0.1.0
+# 📈 Smart Stock Market Dashboard v0.1.0
 
-**ARTHA Dashboard** is an interactive and lightweight stock market dashboard that enables users to visualize stock price movements, explore trends, and filter historical stock data for any publicly traded company. Built using Python's data stack and deployed on Hugging Face Spaces, it delivers a simple, fast, and intuitive interface for both technical and non-technical users.
+**SNEHA Dashboard** is an interactive and lightweight stock market dashboard that enables users to visualize stock price movements, explore trends, and filter historical stock data for any publicly traded company. Built using Python's data stack and deployed on Hugging Face Spaces, it delivers a simple, fast, and intuitive interface for both technical and non-technical users.
 
-<!--![ARTHA Dashboard Demo](https://your-demo-link-here)  Replace with actual GIF or image -->
 
 ---
 
@@ -30,11 +29,11 @@
 
 ## 📦 Installation
 
-To run ARTHA Dashboard locally:
+To run SMART STOCK MARKET Dashboard locally:
 
 ```bash
-git clone https://github.com/your-username/artha-dashboard.git
-cd artha-dashboard
+git https://github.com/snehabhusari/Smart-Stock-Market-Dashboard
+cd Stock-Market-Dashboard
 pip install -r requirements.txt
 python app.py
 ```
@@ -52,10 +51,9 @@ python app.py
 
 You can try out the live version hosted on Hugging Face:
 
-👉 [Launch ARTHA Dashboard](https://cryptic003-artha.hf.space/)
 
 ```bash
-artha-dashboard/
+cd Smart-Stock-Market-Dashboard
 ├── app.py                  # Main Gradio app
 ├── helper_funcs.py         # Helper functions for fetching and cleaning data
 ├── viz.py                  # Matplotlib charting functions
@@ -73,11 +71,11 @@ Contributions are welcome! Feel free to open an issue or submit a pull request t
 
 🧠 Author
 
-Snehal Dutta
+Sneha Bhusari
 
-- [LinkedIn](https://www.linkedin.com/in/snehal-python)
+- [LinkedIn]https://www.linkedin.com/in/sneha-bhusari-9aa3412b5/
+- [Github]https://github.com/snehabhusari
 
-- [GitHub](https://github.com/snehaldutta)
 
 🌟 Show Your Support
 
