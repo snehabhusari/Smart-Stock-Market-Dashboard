@@ -78,8 +78,8 @@ def launch_ui():
             gr.Markdown("This dashboard is built by **Sneha ✨** using Gradio.")
 
     return demo
+import os
 
 if __name__ == "__main__":
     demo = launch_ui()
-  demo.launch(server_name="0.0.0.0", server_port=int(os.environ.get("PORT", 7860)))
-
+    demo.launch(server_name="0.0.0.0", server_port=int(os.environ.get("PORT", 7860)))
