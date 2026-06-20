@@ -5,7 +5,7 @@ import os
 def launch_ui():
     with gr.Blocks(theme=gr.themes.Soft(primary_hue="indigo", secondary_hue="fuchsia"), title="📈 SNEHA's Live Stock Dashboard") as demo:
         
-      gr.HTML("""
+gr.HTML("""
 <style>
 .gradio-container { 
     background: #f1f5f9 !important;  /* super light gray background */
