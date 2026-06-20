@@ -89,21 +89,21 @@ def launch_ui():
            with gr.TabItem("ℹ️ About"):
     gr.HTML("""
     <div style="
-        background: rgba(255, 255, 255, 0.1); 
+        background: rgba(255, 255, 255, 0.05); 
         padding: 25px; 
         border-radius: 20px; 
-        border: 1px solid rgba(255, 255, 255, 0.2); 
-        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.1); 
+        color: #f1f5f9; /* Light white-ish text */
         backdrop-filter: blur(10px);
     ">
-        <h3 style="color: #fbbf24; margin-bottom: 15px;">Welcome to your Financial Intelligence Hub! ✨ Made by SNEHA BHUSARI</h3>
-        <p style="font-size: 16px; line-height: 1.6;">
+        <h3 style="color: #fbbf24; margin-bottom: 15px; font-weight: 500;">Welcome to your Financial Intelligence Hub! ✨</h3>
+        <p style="font-size: 16px; line-height: 1.6; color: #e2e8f0;">
             This dashboard is professionally designed for real-time stock insights.
         </p>
-        <ul style="margin-top: 10px;">
-            <li><b>Developer:</b> Sneha</li>
-            <li><b>Tech Stack:</b> Python, Gradio, YFinance</li>
-            <li><b>Key Features:</b> RSI, Moving Averages, Interactive Charts, and Live Market Data.</li>
+        <ul style="margin-top: 15px; list-style-type: none; padding-left: 0;">
+            <li style="margin-bottom: 8px;"><b>Developer:</b> <span style="color: #cbd5e1;">Sneha</span></li>
+            <li style="margin-bottom: 8px;"><b>Tech Stack:</b> <span style="color: #cbd5e1;">Python, Gradio, YFinance</span></li>
+            <li style="margin-bottom: 8px;"><b>Key Features:</b> <span style="color: #cbd5e1;">RSI, Moving Averages, Interactive Charts, and Live Market Data.</span></li>
         </ul>
     </div>
     """)
