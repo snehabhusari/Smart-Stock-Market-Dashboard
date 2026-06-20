@@ -86,18 +86,27 @@ def launch_ui():
                         output_plot = gr.Plot(label="Live Market Chart")
                         output_df = gr.Dataframe(label="Stock Data Preview")
 
-            with gr.TabItem("ℹ️ About"):
-                gr.Markdown("""
-                <div style="padding: 20px; color: #cbd5e1;">
-                <h3>Welcome to your Financial Intelligence Hub! ✨</h3>
-                <p>This dashboard is professionally designed for real-time stock insights.</p>
-                <ul>
-                    <li><b>Developer:</b> Sneha</li>
-                    <li><b>Tech Stack:</b> Python, Gradio, YFinance</li>
-                    <li><b>Key Features:</b> RSI, Moving Averages, Interactive Charts.</li>
-                </ul>
-                </div>
-                """)
+           with gr.TabItem("ℹ️ About"):
+    gr.HTML("""
+    <div style="
+        background: rgba(255, 255, 255, 0.1); 
+        padding: 25px; 
+        border-radius: 20px; 
+        border: 1px solid rgba(255, 255, 255, 0.2); 
+        color: #e2e8f0;
+        backdrop-filter: blur(10px);
+    ">
+        <h3 style="color: #fbbf24; margin-bottom: 15px;">Welcome to your Financial Intelligence Hub! ✨ Made by <strong>SNEHA BHUSARI</strong></h3>
+        <p style="font-size: 16px; line-height: 1.6;">
+            This dashboard is professionally designed for real-time stock insights.
+        </p>
+        <ul style="margin-top: 10px;">
+            <li><b>Developer:</b> Sneha</li>
+            <li><b>Tech Stack:</b> Python, Gradio, YFinance</li>
+            <li><b>Key Features:</b> RSI, Moving Averages, Interactive Charts, and Live Market Data.</li>
+        </ul>
+    </div>
+    """)
 
         # Visibility Logic to toggle between relative and custom dates
         def toggle(mode):
