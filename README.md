@@ -4,7 +4,7 @@
 
 
 ---
-
+ 
 ## 🚀 Features
 
 - 🔍 **Search Any Stock**: Enter any publicly listed company name or ticker symbol.
