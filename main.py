@@ -1,8 +1,9 @@
 import gradio as gr
 from generate_analysis import run_analysis
+import os
 
 def launch_ui():
-    with gr.Blocks(title="📈 Stock Portfolio Dashboard") as demo: 
+    with gr.Blocks(title="📈 Stock Portfolio Dashboard") as demo:
         # --- Custom CSS for Attractive UI ---
         gr.HTML("""
         <style>
@@ -22,13 +23,10 @@ def launch_ui():
         """)
 
         # --- Animated Heading ---
-        gr.HTML("""
-        <h1>📊 SNEHA : Stock Portfolio Dashboard</h1>
-        """)
+        gr.HTML("<h1>📊 SNEHA : Stock Portfolio Dashboard</h1>")
 
         # --- Tabs for Sections ---
         with gr.Tab("💹 Analysis"):
-            # --- Input Section ---
             with gr.Row():
                 ticker = gr.Textbox(label="💹 Stock Symbol", placeholder="e.g., RVNL.NS", value="RVNL")
 
@@ -53,12 +51,9 @@ def launch_ui():
 
             run_btn = gr.Button("🚀 Analyze")
 
-            # --- Output Section in Cards ---
             output_plot = gr.Plot()
             output_df = gr.Dataframe()
 
-
-            # --- Dynamic Display Logic ---
             def toggle_inputs(mode):
                 return (
                     gr.update(visible=(mode == "Relative Period")),
@@ -67,7 +62,6 @@ def launch_ui():
 
             date_mode.change(fn=toggle_inputs, inputs=[date_mode], outputs=[relative_period_inputs, custom_date_inputs])
 
-            # --- Run Analysis ---
             run_btn.click(
                 fn=run_analysis,
                 inputs=[ticker, date_mode, months, start_date, end_date, plot_type],
@@ -78,8 +72,8 @@ def launch_ui():
             gr.Markdown("This dashboard is built by **Sneha ✨** using Gradio.")
 
     return demo
-import os
 
 if __name__ == "__main__":
     demo = launch_ui()
+    # Render पर PORT environment variable use करना ज़रूरी है
     demo.launch(server_name="0.0.0.0", server_port=int(os.environ.get("PORT", 7860)))
