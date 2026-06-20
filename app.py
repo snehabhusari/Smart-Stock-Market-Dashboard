@@ -1,7 +1,7 @@
 from main import launch_ui
-import sys
-
+import os
 
 if __name__ == "__main__":
-    launch_ui().launch()
-    
+   
+    port = int(os.environ.get("PORT", 10000))
+    launch_ui().launch(server_name="0.0.0.0", server_port=port)
