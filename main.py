@@ -21,13 +21,14 @@ def launch_ui():
             margin-bottom: 20px;
         }
         .marquee h1 {
-            display: inline-block;
-            padding-left: 100%;
-            animation: marquee 15s linear infinite;
-            font-size: 30px;
-            color: #ff6ec4;
-            margin: 0;
-        }
+        display: inline-block;
+        padding-left: 100%;
+        animation: marquee 15s linear infinite;
+        font-size: 30px;
+        color: #60a5fa;  /* light sky blue */
+        margin: 0;
+       }
+
         @keyframes marquee {
             0% { transform: translate(0, 0); }
             100% { transform: translate(-100%, 0); }
