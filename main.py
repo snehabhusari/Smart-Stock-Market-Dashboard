@@ -3,32 +3,54 @@ from generate_analysis import run_analysis
 import os
 
 def launch_ui():
-    
     with gr.Blocks(theme=gr.themes.Soft(primary_hue="indigo", secondary_hue="fuchsia"), title="📈 Sneha's Stock Dashboard") as demo:
         
-        # --- Custom CSS for High-End Animation ---
+        # --- Advanced CSS for Animations ---
         gr.HTML("""
         <style>
-        .gradio-container { background: #0f172a !important; }
-        h1 { 
-            text-align: center; 
-            color: #ffffff; 
-            font-size: 40px; 
+        .gradio-container { background: #0f172a !important; color: #ffffff !important; }
+        
+        /* Animated Marquee Heading */
+        .marquee {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 0;
+            border-radius: 10px;
             margin-bottom: 20px;
-            background: -webkit-linear-gradient(#ff6ec4, #7873f5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: pulse 2s infinite;
         }
-        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
-        .tab-button { font-weight: bold !important; }
+        .marquee h1 {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 15s linear infinite;
+            font-size: 30px;
+            color: #ff6ec4;
+            margin: 0;
+        }
+        @keyframes marquee {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+
+        /* Button hover animation */
+        button:hover {
+            transform: scale(1.05);
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 0 15px #7873f5;
+        }
         </style>
         """)
 
-        gr.HTML("<h1>📊 SNEHA: Smart Stock Portfolio Dashboard</h1>")
+        # --- Animated Header Section ---
+        gr.HTML("""
+        <div class="marquee">
+            <h1>📊 SNEHA: Smart Stock Portfolio Dashboard | Real-Time Market Analysis 📈</h1>
+        </div>
+        """)
 
         with gr.Tabs():
-            with gr.TabItem("💹 Market Analysis", elem_classes="tab-button"):
+            with gr.TabItem("💹 Market Analysis"):
                 with gr.Row():
                     with gr.Column(scale=1):
                         ticker = gr.Textbox(label="Stock Symbol", value="RVNL", placeholder="e.g. RELIANCE.NS")
@@ -48,15 +70,15 @@ def launch_ui():
                         output_plot = gr.Plot(label="Live Market Chart")
                         output_df = gr.Dataframe(label="Stock Data Preview")
 
-            with gr.TabItem("ℹ️ About", elem_classes="tab-button"):
+            with gr.TabItem("ℹ️ About"):
                 gr.Markdown("""
-                ### Welcome to your Personal Finance Hub! ✨
-                - **Built by:** Sneha
-                - **Features:** Real-time stock data analysis, RSI calculation, and Moving Averages.
-                - **Technology:** Python, Gradio, YFinance.
+                ### Welcome! 👋
+                This dashboard provides real-time stock insights using Python, Gradio, and YFinance.
+                - **Developer:** Sneha
+                - **Core Features:** Technical Indicators, Price History, and Relative Analysis.
                 """)
 
-        # Logic for hiding/showing fields
+        # Visibility logic
         def toggle(mode):
             return gr.update(visible=(mode == "Relative Period")), gr.update(visible=(mode == "Custom Date Range"))
         
