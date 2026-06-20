@@ -3,12 +3,12 @@ from generate_analysis import run_analysis
 import os
 
 def launch_ui():
-    with gr.Blocks(theme=gr.themes.Soft(primary_hue="indigo", secondary_hue="fuchsia"), title="📈 Sneha's Stock Dashboard") as demo:
+    with gr.Blocks(theme=gr.themes.Soft(primary_hue="indigo", secondary_hue="fuchsia"), title="📈 SNEHA's Live Stock Dashboard") as demo:
         
         # --- Advanced CSS for Animations ---
         gr.HTML("""
         <style>
-        .gradio-container { background: #0f172a !important; color: #ffffff !important; }
+        .gradio-container { background:#334155 !important; color: #ffffff !important; }
         
         /* Animated Marquee Heading */
         .marquee {
