@@ -93,7 +93,7 @@ def launch_ui():
         padding: 25px; 
         border-radius: 20px; 
         border: 1px solid rgba(255, 255, 255, 0.2); 
-        color: #e2e8f0;
+        color: #ffffff;
         backdrop-filter: blur(10px);
     ">
         <h3 style="color: #fbbf24; margin-bottom: 15px;">Welcome to your Financial Intelligence Hub! ✨ Made by SNEHA BHUSARI</h3>
