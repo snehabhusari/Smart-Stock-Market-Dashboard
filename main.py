@@ -1,7 +1,7 @@
 import gradio as gr
 from generate_analysis import run_analysis, run_analysis_multi
 import os
-
+ 
 def launch_ui():
     with gr.Blocks(theme=gr.themes.Soft(primary_hue="indigo"), title="📈 Sneha's Stock Dashboard") as demo:
 
