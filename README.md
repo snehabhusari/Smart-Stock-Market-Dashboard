@@ -7,7 +7,7 @@ Built using Python's data stack and hosted on **Render**, it delivers a simple, 
 🔗 **[[Live Demo.](https://smart-stock-market-dashboard.onrender.com/)](#)**  
 
 ---
-
+ 
 ## 🚀 Features
 - 🔍 **Search Any Stock**: Enter any publicly listed company name or ticker symbol  
 - 📅 **Date Filtering**: Filter stock data by month range or custom date intervals  
