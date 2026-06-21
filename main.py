@@ -81,6 +81,10 @@ def launch_ui():
                         
                         plot_type = gr.Dropdown(["Price Only", "Price + MA", "RSI Only", "Price + MA + RSI"], value="Price + MA + RSI", label="Analysis Type")
                         run_btn = gr.Button("🚀 Generate Analysis")
+                         run_btn.click(
+            fn=run_analysis,
+            inputs=[company, date_mode, months, start_date, end_date, plot_type],
+            outputs=[output_plot, output_df]
                     
                     with gr.Column(scale=2):
                         output_plot = gr.Plot(label="Live Market Chart")
