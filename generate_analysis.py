@@ -68,3 +68,14 @@ def run_analysis_multi(companies, date_mode, months=None, start_date=None, end_d
     summary = combined_df[["Company","Close","RSI_10","MA_10"]].tail(10)
 
     return fig, summary
+
+# --- unified wrapper for Gradio ---
+def run_analysis_wrapper(company_name, date_mode, months=None, start_date=None, end_date=None, plot_type=None):
+    """
+    Wrapper function that decides whether to call single-company or multi-company analysis.
+    Gradio Dropdown with multiselect=True will pass a list when multiple tickers are chosen.
+    """
+    if isinstance(company_name, list):  # multiple tickers selected
+        return run_analysis_multi(company_name, date_mode, months, start_date, end_date, plot_type)
+    else:  # single ticker
+        return run_analysis(company_name, date_mode, months, start_date, end_date, plot_type)
