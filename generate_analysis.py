@@ -1,4 +1,3 @@
-from generate_analysis import run_analysis
 from helper_funcs import calculate_rsi, calculate_moving_average
 from datetime import datetime
 from data_preprocess import fetch_data, clean_data
