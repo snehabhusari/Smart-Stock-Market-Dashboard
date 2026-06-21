@@ -29,7 +29,7 @@ def launch_ui():
           padding: 12px;
           border-radius: 10px;
           width: 180px;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          transition: transform 0.12s ease, box-shadow 0.12s ease;
         }
         .company-card h4 {
           margin: 0;
@@ -49,7 +49,7 @@ def launch_ui():
           white-space: nowrap;
           box-sizing: border-box;
         }
-    .marquee-text {
+.marquee-text {
   display: inline-block;
   padding-left: 100%;
   animation: marquee 12s linear infinite, gradientFlow 6s ease infinite;
@@ -60,6 +60,14 @@ def launch_ui():
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.emoji {
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  background: none;
+  color: inherit;
+}
+
 
 @keyframes marquee {
   0%   { transform: translate(0, 0); }
@@ -76,11 +84,14 @@ def launch_ui():
         """)
 
         gr.HTML("""
-        <div class="marquee-container">
-            <div class="marquee-text">
-                📊 SNEHA: SMART STOCK PORTFOLIO DASHBOARD | SINGLE + MULTI COMPANY ANALYSIS | RSI + MA 📈
-            </div>
-        </div>
+       <div class="marquee-container">
+  <div class="marquee-text">
+    <span class="emoji">📊</span> 
+    SNEHA: SMART STOCK PORTFOLIO DASHBOARD | SINGLE + MULTI COMPANY ANALYSIS | RSI + MA 
+    <span class="emoji">📈</span>
+  </div>
+</div>
+
         """)
 
         with gr.Tabs():
