@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from ticker import fetch_ticker
-from main import launch_ui
+from main import launch_ui 
 import os
 
 app = Flask(__name__)
