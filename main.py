@@ -49,22 +49,29 @@ def launch_ui():
           white-space: nowrap;
           box-sizing: border-box;
         }
-     .marquee-text {
+    .marquee-text {
   display: inline-block;
   padding-left: 100%;
-  animation: marquee 12s linear infinite;
+  animation: marquee 12s linear infinite, gradientFlow 6s ease infinite;
   font-size: 22px;
   font-weight: bold;
   background: linear-gradient(90deg, #FFD700, #4f46e5, #9333ea);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
 
+@keyframes marquee {
+  0%   { transform: translate(0, 0); }
+  100% { transform: translate(-100%, 0); }
+}
 
-        }
-        @keyframes marquee {
-          0%   { transform: translate(0, 0); }
-          100% { transform: translate(-100%, 0); }
-        }
+@keyframes gradientFlow {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+
         </style>
         """)
 
