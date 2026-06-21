@@ -52,7 +52,7 @@ def launch_ui():
 .marquee-text {
   display: inline-block;
   padding-left: 100%;
-  animation: marquee 12s linear infinite, gradientFlow 6s ease infinite;
+  animation: marquee 12s linear infinite, gradientFlow 12s ease infinite;
   font-size: 22px;
   font-weight: bold;
   background: linear-gradient(90deg, #FFD700, #4f46e5, #9333ea);
