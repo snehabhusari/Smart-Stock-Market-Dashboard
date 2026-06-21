@@ -53,7 +53,7 @@ def run_analysis_multi(companies, date_mode, months=None, start_date=None, end_d
         df = calculate_moving_average(df)
         df["Company"] = ticker
 
-        all_data.append(df)
+        all_data.append(df) 
 
         ax.plot(df.index, df["Close"], label=f"{ticker} Close")
         if "MA" in plot_type:
