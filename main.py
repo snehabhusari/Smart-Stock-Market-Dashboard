@@ -1,7 +1,24 @@
 import gradio as gr
 from generate_analysis import run_analysis, run_analysis_multi
 import os
- 
+
+# --- helper to convert summary dataframe into HTML cards ---
+def make_company_cards(summary_df):
+    if summary_df is None or summary_df.empty:
+        return "<p>No data available.</p>"
+    cards_html = "<div style='display:flex;flex-wrap:wrap;gap:10px;'>"
+    for _, row in summary_df.iterrows():
+        cards_html += f"""
+        <div style='background:#1f2937;color:#f9fafb;padding:10px;border-radius:8px;width:180px;'>
+            <h4 style='margin:0;color:#fbbf24;'>{row['Company']}</h4>
+            <p>Close: {row['Close']:.2f}</p>
+            <p>RSI: {row['RSI_10']:.2f}</p>
+            <p>MA: {row['MA_10']:.2f}</p>
+        </div>
+        """
+    cards_html += "</div>"
+    return cards_html
+
 def launch_ui():
     with gr.Blocks(theme=gr.themes.Soft(primary_hue="indigo"), title="📈 Sneha's Stock Dashboard") as demo:
 
@@ -97,8 +114,13 @@ def launch_ui():
             outputs=[output_plot_single, output_df_single]
         )
 
+        def run_multi_and_cards(companies, date_mode_multi, months_multi, start_date_multi, end_date_multi, plot_type_multi):
+            fig, summary = run_analysis_multi(companies, date_mode_multi, months_multi, start_date_multi, end_date_multi, plot_type_multi)
+            cards_html = make_company_cards(summary)
+            return fig, summary, cards_html
+
         run_btn_multi.click(
-            fn=run_analysis_multi,
+            fn=run_multi_and_cards,
             inputs=[companies, date_mode_multi, months_multi, start_date_multi, end_date_multi, plot_type_multi],
             outputs=[output_plot_multi, output_df_multi, company_cards]
         )
