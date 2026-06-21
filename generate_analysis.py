@@ -2,27 +2,20 @@ from helper_funcs import calculate_rsi, calculate_moving_average
 from datetime import datetime
 from data_preprocess import fetch_data, clean_data
 import viz
+import matplotlib.pyplot as plt
+import pandas as pd
+import yfinance as yf
 
 def run_analysis(company_name, date_mode, months=None, start_date=None, end_date=None, plot_type=None):
-    """
-    Complete data pipeline that:
-    - Fetches stock data via yfinance
-    - Computes indicators (MA, RSI)
-    - Chooses plot type
-    - Returns plot + summary table
-    """
+    # --- single company pipeline ---
     if date_mode == "Relative Period":
         df = fetch_data(company_name, period_months=int(months))
     else:
         df = fetch_data(company_name, start_date=start_date, end_date=end_date)
-    # Remove cols
     df = clean_data(df)
-
-    # Compute indicators
     df = calculate_rsi(df)
     df = calculate_moving_average(df)
 
-    # Plot based on selection
     if plot_type == "Price Only":
         fig = viz.plot_price(df)
     elif plot_type == "Price + MA":
@@ -32,17 +25,46 @@ def run_analysis(company_name, date_mode, months=None, start_date=None, end_date
     else:
         fig = viz.plot_combined(df)
 
-    # Return chart and summary
     summary = df[["Close", "RSI_10", "MA_10"]].tail(5)
     return fig, summary
 
-import matplotlib.pyplot as plt
-
 def run_analysis_simple(df, analysis_type="RSI Only"):
-    # df = tumhara stock data (Close, RSI_10, MA_10)
+    # --- simple plotting helper ---
     fig, ax = plt.subplots()
     ax.plot(df['Close'], label="Close Price")
     ax.plot(df['RSI_10'], label="RSI")
     ax.plot(df['MA_10'], label="MA")
     ax.legend()
     return fig, df
+
+def run_analysis_multi(companies, date_mode, months=None, start_date=None, end_date=None, plot_type=None):
+    # --- multi-company portfolio analysis ---
+    all_data = []
+    fig, ax = plt.subplots(figsize=(10,6))
+
+    for ticker in companies:
+        if date_mode == "Relative Period":
+            df = fetch_data(ticker, period_months=int(months))
+        else:
+            df = fetch_data(ticker, start_date=start_date, end_date=end_date)
+
+        df = clean_data(df)
+        df = calculate_rsi(df)
+        df = calculate_moving_average(df)
+        df["Company"] = ticker
+
+        all_data.append(df)
+
+        ax.plot(df.index, df["Close"], label=f"{ticker} Close")
+        if "MA" in plot_type:
+            ax.plot(df.index, df["MA_10"], linestyle="--", label=f"{ticker} MA_10")
+
+    ax.set_title("Portfolio Price Comparison")
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Price")
+    ax.legend()
+
+    combined_df = pd.concat(all_data)
+    summary = combined_df[["Company","Close","RSI_10","MA_10"]].tail(10)
+
+    return fig, summary
