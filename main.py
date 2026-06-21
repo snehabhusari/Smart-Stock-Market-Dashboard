@@ -52,7 +52,7 @@ def launch_ui():
 .marquee-text {
   display: inline-block;
   padding-left: 100%;
-  animation: marquee 12s linear infinite, gradientFlow 12s ease infinite;
+  animation: marquee 12s linear infinite, gradientFlow 6s ease infinite;
   font-size: 22px;
   font-weight: bold;
   background: linear-gradient(90deg, #FFD700, #4f46e5, #9333ea);
@@ -68,7 +68,6 @@ def launch_ui():
   color: inherit;
 }
 
-
 @keyframes marquee {
   0%   { transform: translate(0, 0); }
   100% { transform: translate(-100%, 0); }
@@ -79,6 +78,7 @@ def launch_ui():
   50% { background-position: 100% center; }
   100% { background-position: 0% center; }
 }
+
 
         </style>
         """)
