@@ -1,7 +1,7 @@
 import gradio as gr
 from generate_analysis import run_analysis
 import os 
-
+ 
 def launch_ui():
     # Use Soft theme with indigo primary color
     with gr.Blocks(theme=gr.themes.Soft(primary_hue="indigo"), title="📈 Sneha's Stock Dashboard") as demo:
