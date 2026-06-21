@@ -4,7 +4,7 @@
 
 Built using Python's data stack and hosted on **Render**, it delivers a simple, fast, and intuitive interface for both technical and non-technical users.  
 
-🔗 **[Live Demo](#)**  
+🔗 **[Live Demo.](#)**  
 
 ---
 
