@@ -5,7 +5,7 @@ import os
 def make_company_cards(summary_df):
     if summary_df is None or summary_df.empty:
         return "<p>No data available.</p>"
-    cards_html = "<div class='cards-container'>"
+    cards_html = "<div class='cards-container'>" 
     for _, row in summary_df.iterrows():
         cards_html += f"""
         <div class='company-card'>
