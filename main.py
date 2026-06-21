@@ -43,7 +43,7 @@ def launch_ui():
           display: flex;
           flex-wrap: wrap;
           gap: 12px;
-        }
+        } 
         .marquee-container {
           overflow: hidden;
           white-space: nowrap;
