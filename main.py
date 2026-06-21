@@ -2,7 +2,7 @@ import gradio as gr
 from generate_analysis import run_analysis, run_analysis_multi
 import os
 
-def make_company_cards(summary_df):
+def make_company_cards(summary_df): 
     if summary_df is None or summary_df.empty:
         return "<p>No data available.</p>"
     cards_html = "<div class='cards-container'>" 
