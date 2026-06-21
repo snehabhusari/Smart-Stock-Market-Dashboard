@@ -2,15 +2,14 @@ import gradio as gr
 from generate_analysis import run_analysis, run_analysis_multi
 import os
 
-# --- helper to convert summary dataframe into HTML cards ---
 def make_company_cards(summary_df):
     if summary_df is None or summary_df.empty:
         return "<p>No data available.</p>"
-    cards_html = "<div style='display:flex;flex-wrap:wrap;gap:10px;'>"
+    cards_html = "<div class='cards-container'>"
     for _, row in summary_df.iterrows():
         cards_html += f"""
-        <div style='background:#1f2937;color:#f9fafb;padding:10px;border-radius:8px;width:180px;'>
-            <h4 style='margin:0;color:#fbbf24;'>{row['Company']}</h4>
+        <div class='company-card'>
+            <h4>{row['Company']}</h4>
             <p>Close: {row['Close']:.2f}</p>
             <p>RSI: {row['RSI_10']:.2f}</p>
             <p>MA: {row['MA_10']:.2f}</p>
@@ -22,7 +21,49 @@ def make_company_cards(summary_df):
 def launch_ui():
     with gr.Blocks(theme=gr.themes.Soft(primary_hue="indigo"), title="📈 Sneha's Stock Dashboard") as demo:
 
-        # Animated Header
+        gr.HTML("""
+        <style>
+        .company-card {
+          background: linear-gradient(135deg, #4f46e5, #9333ea);
+          color: #f9fafb;
+          padding: 12px;
+          border-radius: 10px;
+          width: 180px;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .company-card h4 {
+          margin: 0;
+          color: #fbbf24;
+        }
+        .company-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+        .cards-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+        }
+        .marquee-container {
+          overflow: hidden;
+          white-space: nowrap;
+          box-sizing: border-box;
+        }
+        .marquee-text {
+          display: inline-block;
+          padding-left: 100%;
+          animation: marquee 12s linear infinite;
+          font-size: 20px;
+          font-weight: bold;
+          color: #fbbf24;
+        }
+        @keyframes marquee {
+          0%   { transform: translate(0, 0); }
+          100% { transform: translate(-100%, 0); }
+        }
+        </style>
+        """)
+
         gr.HTML("""
         <div class="marquee-container">
             <div class="marquee-text">
@@ -32,32 +73,26 @@ def launch_ui():
         """)
 
         with gr.Tabs():
-            # --- Single Company Analysis Tab ---
             with gr.TabItem("💹 Single Stock Analysis"):
                 with gr.Row():
                     with gr.Column(scale=1):
                         ticker = gr.Textbox(label="Stock Symbol", value="RVNL", placeholder="e.g. RELIANCE.NS")
                         date_mode = gr.Radio(["Relative Period", "Custom Date Range"], value="Relative Period", label="Select Mode")
-
                         with gr.Group() as period_group:
                             months = gr.Slider(1, 24, value=6, label="Period (Months)")
-
                         with gr.Group(visible=False) as date_group:
                             start_date = gr.Textbox(label="Start Date (YYYY-MM-DD)", value="2023-01-01")
                             end_date = gr.Textbox(label="End Date (YYYY-MM-DD)", value="2023-12-31")
-
                         plot_type = gr.Dropdown(
                             ["Price Only", "Price + MA", "RSI Only", "Price + MA + RSI"],
                             value="Price + MA + RSI",
                             label="Analysis Type"
                         )
                         run_btn_single = gr.Button("🚀 Analyze Single Stock")
-
                     with gr.Column(scale=2):
                         output_plot_single = gr.Plot(label="Stock Chart")
                         output_df_single = gr.Dataframe(label="Stock Data Preview")
 
-            # --- Multi Company Portfolio Tab ---
             with gr.TabItem("📈 Portfolio Analysis"):
                 with gr.Row():
                     with gr.Column(scale=1):
@@ -68,27 +103,22 @@ def launch_ui():
                             value=["RELIANCE.NS","INFY.NS"]
                         )
                         date_mode_multi = gr.Radio(["Relative Period", "Custom Date Range"], value="Relative Period", label="Select Mode")
-
                         with gr.Group() as period_group_multi:
                             months_multi = gr.Slider(1, 24, value=6, label="Period (Months)")
-
                         with gr.Group(visible=False) as date_group_multi:
                             start_date_multi = gr.Textbox(label="Start Date (YYYY-MM-DD)", value="2023-01-01")
                             end_date_multi = gr.Textbox(label="End Date (YYYY-MM-DD)", value="2023-12-31")
-
                         plot_type_multi = gr.Dropdown(
                             ["Price Only", "Price + MA", "RSI Only", "Price + MA + RSI"],
                             value="Price + MA + RSI",
                             label="Analysis Type"
                         )
                         run_btn_multi = gr.Button("🚀 Analyze Portfolio")
-
                     with gr.Column(scale=2):
                         output_plot_multi = gr.Plot(label="Portfolio Chart")
                         output_df_multi = gr.Dataframe(label="Portfolio Data Preview")
                         company_cards = gr.HTML(label="Company Summaries")
 
-            # --- About Tab ---
             with gr.TabItem("ℹ️ About"):
                 gr.HTML("""
                 <div style="padding:20px; color:#f1f5f9;">
@@ -97,17 +127,14 @@ def launch_ui():
                 </div>
                 """)
 
-        # Toggle logic for single tab
         def toggle(mode):
             return gr.update(visible=(mode == "Relative Period")), gr.update(visible=(mode == "Custom Date Range"))
         date_mode.change(toggle, inputs=[date_mode], outputs=[period_group, date_group])
 
-        # Toggle logic for multi tab
         def toggle_multi(mode):
             return gr.update(visible=(mode == "Relative Period")), gr.update(visible=(mode == "Custom Date Range"))
         date_mode_multi.change(toggle_multi, inputs=[date_mode_multi], outputs=[period_group_multi, date_group_multi])
 
-        # Bindings
         run_btn_single.click(
             fn=run_analysis,
             inputs=[ticker, date_mode, months, start_date, end_date, plot_type],
