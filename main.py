@@ -24,7 +24,7 @@ def launch_ui():
         gr.HTML("""
         <style>
         .company-card {
-          background: linear-gradient(135deg, #4f46e5, #9333ea);
+          background: linear-gradient(90deg, #FFD700, #4f46e5, #9333ea);
           color: #f9fafb;
           padding: 12px;
           border-radius: 10px;
@@ -49,13 +49,17 @@ def launch_ui():
           white-space: nowrap;
           box-sizing: border-box;
         }
-        .marquee-text {
-          display: inline-block;
-          padding-left: 100%;
-          animation: marquee 12s linear infinite;
-          font-size: 20px;
-          font-weight: bold;
-          color: #fbbf24;
+     .marquee-text {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 12s linear infinite;
+  font-size: 22px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #FFD700, #4f46e5, #9333ea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+
         }
         @keyframes marquee {
           0%   { transform: translate(0, 0); }
