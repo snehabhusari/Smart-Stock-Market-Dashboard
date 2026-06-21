@@ -8,7 +8,7 @@ def make_company_cards(summary_df):
     cards_html = "<div class='cards-container'>" 
     for _, row in summary_df.iterrows():
         cards_html += f"""
-        <div class='company-card'>
+        <div class='company-card'> 
             <h4>{row['Company']}</h4>
             <p>Close: {row['Close']:.2f}</p>
             <p>RSI: {row['RSI_10']:.2f}</p>
