@@ -1,66 +1,22 @@
 import gradio as gr
-from generate_analysis import run_analysis
-import os 
- 
-def launch_ui():
-    # Use Soft theme with indigo primary color
-    with gr.Blocks(theme=gr.themes.Soft(primary_hue="indigo"), title="📈 Sneha's Stock Dashboard") as demo:
-        
-        # Inject custom CSS for animations and styling
-        gr.HTML("""
-        <style>
-        .gradio-container { 
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important; 
-            color: #ffffff !important;
-        }
-        .marquee-container {
-            width: 100%;
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px 0;
-            border-radius: 50px;
-            margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-        }
-        .marquee-text {
-            display: inline-block;
-            white-space: nowrap;
-            animation: move-text 20s linear infinite;
-            font-size: 28px;
-            font-weight: bold;
-            color: #fbbf24;
-            text-shadow: 0 0 10px #fbbf24;
-        }
-        @keyframes move-text {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-        .gr-box { background: rgba(255, 255, 255, 0.05) !important; border-radius: 15px !important; }
-        button { 
-            background: linear-gradient(45deg, #4f46e5, #ec4899) !important;
-            color: white !important;
-            border: none !important;
-            transition: all 0.4s ease !important;
-        }
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px #ec4899;
-        }
-        </style>
-        """)
+from generate_analysis import run_analysis, run_analysis_multi
+import os
 
-        # Animated Header Display
+def launch_ui():
+    with gr.Blocks(theme=gr.themes.Soft(primary_hue="indigo"), title="📈 Sneha's Stock Dashboard") as demo:
+
+        # Animated Header
         gr.HTML("""
         <div class="marquee-container">
             <div class="marquee-text">
-                📊 SNEHA: SMART STOCK PORTFOLIO DASHBOARD | REAL-TIME ANALYSIS | LIVE MARKET UPDATES 📈
+                📊 SNEHA: SMART STOCK PORTFOLIO DASHBOARD | SINGLE + MULTI COMPANY ANALYSIS | RSI + MA 📈
             </div>
         </div>
         """)
 
         with gr.Tabs():
-            with gr.TabItem("💹 Market Analysis"):
+            # --- Single Company Analysis Tab ---
+            with gr.TabItem("💹 Single Stock Analysis"):
                 with gr.Row():
                     with gr.Column(scale=1):
                         ticker = gr.Textbox(label="Stock Symbol", value="RVNL", placeholder="e.g. RELIANCE.NS")
@@ -78,47 +34,73 @@ def launch_ui():
                             value="Price + MA + RSI",
                             label="Analysis Type"
                         )
-                        run_btn = gr.Button("🚀 Generate Analysis")
+                        run_btn_single = gr.Button("🚀 Analyze Single Stock")
 
                     with gr.Column(scale=2):
-                        output_plot = gr.Plot(label="Live Market Chart")
-                        output_df = gr.Dataframe(label="Stock Data Preview")
+                        output_plot_single = gr.Plot(label="Stock Chart")
+                        output_df_single = gr.Dataframe(label="Stock Data Preview")
 
+            # --- Multi Company Portfolio Tab ---
+            with gr.TabItem("📈 Portfolio Analysis"):
+                with gr.Row():
+                    with gr.Column(scale=1):
+                        companies = gr.Dropdown(
+                            ["RELIANCE.NS", "TCS.NS", "INFY.NS", "HDFCBANK.NS", "ITC.NS"],
+                            label="Select Companies",
+                            multiselect=True,
+                            value=["RELIANCE.NS","INFY.NS"]
+                        )
+                        date_mode_multi = gr.Radio(["Relative Period", "Custom Date Range"], value="Relative Period", label="Select Mode")
+
+                        with gr.Group() as period_group_multi:
+                            months_multi = gr.Slider(1, 24, value=6, label="Period (Months)")
+
+                        with gr.Group(visible=False) as date_group_multi:
+                            start_date_multi = gr.Textbox(label="Start Date (YYYY-MM-DD)", value="2023-01-01")
+                            end_date_multi = gr.Textbox(label="End Date (YYYY-MM-DD)", value="2023-12-31")
+
+                        plot_type_multi = gr.Dropdown(
+                            ["Price Only", "Price + MA", "RSI Only", "Price + MA + RSI"],
+                            value="Price + MA + RSI",
+                            label="Analysis Type"
+                        )
+                        run_btn_multi = gr.Button("🚀 Analyze Portfolio")
+
+                    with gr.Column(scale=2):
+                        output_plot_multi = gr.Plot(label="Portfolio Chart")
+                        output_df_multi = gr.Dataframe(label="Portfolio Data Preview")
+                        company_cards = gr.HTML(label="Company Summaries")
+
+            # --- About Tab ---
             with gr.TabItem("ℹ️ About"):
                 gr.HTML("""
-                <div style="
-                    background: rgba(255, 255, 255, 0.05); 
-                    padding: 25px; 
-                    border-radius: 20px; 
-                    border: 1px solid rgba(255, 255, 255, 0.1); 
-                    color: #f1f5f9;
-                    backdrop-filter: blur(10px);
-                ">
-                    <h3 style="color: #fbbf24; margin-bottom: 15px; font-weight: 500;">
-                        Welcome to your Financial Intelligence Hub! ✨
-                    </h3>
-                    <p style="font-size: 16px; line-height: 1.6; color: #e2e8f0;">
-                        This dashboard is professionally designed for real-time stock insights.
-                    </p>
-                    <ul style="margin-top: 15px; list-style-type: none; padding-left: 0;">
-                        <li><b>Developer:</b> <span style="color: #cbd5e1;">Sneha</span></li>
-                        <li><b>Tech Stack:</b> <span style="color: #cbd5e1;">Python, Gradio, YFinance</span></li>
-                        <li><b>Key Features:</b> <span style="color: #cbd5e1;">RSI, Moving Averages, Interactive Charts, and Live Market Data.</span></li>
-                    </ul>
+                <div style="padding:20px; color:#f1f5f9;">
+                    <h3 style="color:#fbbf24;">Welcome to Sneha's Financial Intelligence Hub ✨</h3>
+                    <p>This dashboard supports both single stock and multi-company portfolio analysis with RSI + Moving Averages.</p>
                 </div>
                 """)
 
-        # Toggle logic
+        # Toggle logic for single tab
         def toggle(mode):
             return gr.update(visible=(mode == "Relative Period")), gr.update(visible=(mode == "Custom Date Range"))
-
         date_mode.change(toggle, inputs=[date_mode], outputs=[period_group, date_group])
 
-        # Button binding outside tabs
-        run_btn.click(
+        # Toggle logic for multi tab
+        def toggle_multi(mode):
+            return gr.update(visible=(mode == "Relative Period")), gr.update(visible=(mode == "Custom Date Range"))
+        date_mode_multi.change(toggle_multi, inputs=[date_mode_multi], outputs=[period_group_multi, date_group_multi])
+
+        # Bindings
+        run_btn_single.click(
             fn=run_analysis,
             inputs=[ticker, date_mode, months, start_date, end_date, plot_type],
-            outputs=[output_plot, output_df]
+            outputs=[output_plot_single, output_df_single]
+        )
+
+        run_btn_multi.click(
+            fn=run_analysis_multi,
+            inputs=[companies, date_mode_multi, months_multi, start_date_multi, end_date_multi, plot_type_multi],
+            outputs=[output_plot_multi, output_df_multi, company_cards]
         )
 
     return demo
@@ -126,4 +108,3 @@ def launch_ui():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     launch_ui().launch(server_name="0.0.0.0", server_port=port)
- bnao
