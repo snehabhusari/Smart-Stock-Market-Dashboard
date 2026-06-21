@@ -35,3 +35,14 @@ def run_analysis(company_name, date_mode, months=None, start_date=None, end_date
     # Return chart and summary
     summary = df[["Close", "RSI_10", "MA_10"]].tail(5)
     return fig, summary
+
+import matplotlib.pyplot as plt
+
+def run_analysis_simple(df, analysis_type="RSI Only"):
+    # df = tumhara stock data (Close, RSI_10, MA_10)
+    fig, ax = plt.subplots()
+    ax.plot(df['Close'], label="Close Price")
+    ax.plot(df['RSI_10'], label="RSI")
+    ax.plot(df['MA_10'], label="MA")
+    ax.legend()
+    return fig, df
