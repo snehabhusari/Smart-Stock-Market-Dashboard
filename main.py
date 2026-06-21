@@ -113,7 +113,7 @@ def launch_ui():
             return gr.update(visible=(mode == "Relative Period")), gr.update(visible=(mode == "Custom Date Range"))
         
         date_mode.change(toggle, inputs=[date_mode], outputs=[period_group, date_group])
-        
+         
         # Link button click to analysis function
         run_btn.click(
             fn=run_analysis,
